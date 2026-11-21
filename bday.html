@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Zune 💕</title>
+  <style>
+    :root {
+      --pink: #ec5b91;
+      --deep-pink: #b93d70;
+      --blush: #fff0f5;
+      --cream: #fffafc;
+      --text: #74475a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow-x: hidden;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.9) 0 3px, transparent 4px),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.75) 0 3px, transparent 4px),
+        linear-gradient(135deg, #ffdce8 0%, #f8a8c5 50%, #ffcfe0 100%);
+      background-size: 42px 42px, 56px 56px, auto;
+    }
+
+    .flower-border {
+      position: fixed;
+      z-index: 0;
+      font-size: clamp(22px, 3vw, 38px);
+      line-height: 1.5;
+      opacity: .76;
+      pointer-events: none;
+      user-select: none;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      letter-spacing: 8px;
+    }
+
+    .left {
+      left: clamp(8px, 3vw, 42px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .right {
+      right: clamp(8px, 3vw, 42px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(90vw, 430px);
+      padding: 42px 38px 36px;
+      border: 1px solid rgba(255, 255, 255, .85);
+      border-radius: 28px;
+      background: rgba(255, 250, 252, .94);
+      box-shadow: 0 18px 50px rgba(145, 63, 96, .22);
+      text-align: center;
+    }
+
+    .heart {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(236, 91, 145, .18);
+      font-size: 34px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 8vw, 38px);
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: reveal .45s ease;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 7px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      border: 1.5px solid #efbdd0;
+      border-radius: 14px;
+      padding: 0 15px;
+      outline: none;
+      background: #fff;
+      color: #5f3948;
+      font: inherit;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    input:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px rgba(236, 91, 145, .11);
+    }
+
+    button {
+      width: 100%;
+      height: 49px;
+      margin-top: 20px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ef6d9c, #bd4c7a);
+      color: white;
+      font: 700 15px "Trebuchet MS", "Segoe UI", sans-serif;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(185, 61, 112, .22);
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 13px 26px rgba(185, 61, 112, .28);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .message {
+      min-height: 44px;
+      margin: 16px 0 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--blush);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message:empty {
+      display: none;
+    }
+
+    .success {
+      padding: 12px 4px 4px;
+      color: var(--deep-pink);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    body.after-login {
+      --pink: #68afd4;
+      --deep-pink: #397fa6;
+      --blush: #e9f7fd;
+      --cream: #f7fcff;
+      --text: #385d70;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.9) 0 3px, transparent 4px),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.75) 0 3px, transparent 4px),
+        linear-gradient(135deg, #e0f5ff 0%, #a9ddf3 50%, #d2effc 100%);
+      background-size: 42px 42px, 56px 56px, auto;
+    }
+
+    .after-login .flower-border {
+      font-size: 0;
+      color: #438db4;
+    }
+
+    .after-login .flower-border::after {
+      content: "✿︎  ·  ✿︎  ·  ✿︎  ·  ✿︎";
+      font-size: clamp(22px, 3vw, 38px);
+    }
+
+    .after-login .card {
+      width: min(90vw, 480px);
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .after-login .heart {
+      display: none;
+    }
+
+    .after-login .card > h1,
+    .after-login .card > .subtitle {
+      display: none;
+    }
+
+    .celebration-step {
+      position: relative;
+      padding: 46px 8px;
+    }
+
+    .celebration-step::before,
+    .celebration-step::after {
+      position: absolute;
+      left: 50%;
+      color: #438db4;
+      font-size: clamp(24px, 7vw, 36px);
+      letter-spacing: 12px;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .celebration-step::before {
+      content: "✿  ♥  ❀  ♥  ✿";
+      top: 0;
+    }
+
+    .celebration-step::after {
+      content: "♥  ❀  ♥  ✿  ♥";
+      bottom: 0;
+    }
+
+    .celebration-message {
+      margin: 0;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 1.25;
+    }
+
+    .photo-intro-message {
+      margin: 0;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 1.25;
+    }
+
+    .favorite-photo {
+      display: block;
+      width: min(100%, 420px);
+      max-height: 62vh;
+      margin: 0 auto;
+      border-radius: 18px;
+      object-fit: contain;
+      box-shadow: 0 16px 38px rgba(48, 113, 147, .2);
+    }
+
+    .photo-gallery.step.active {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0;
+      padding: clamp(14px, 2.4vw, 32px);
+      overflow-y: auto;
+      background: linear-gradient(135deg, #e0f5ff 0%, #a9ddf3 50%, #d2effc 100%);
+      text-align: center;
+    }
+
+    .gallery-title {
+      margin: 0 auto 18px;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(25px, 5vw, 38px);
+      line-height: 1.2;
+    }
+
+    .gallery-note {
+      margin: 20px auto 4px;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(18px, 4vw, 24px);
+    }
+
+    .gallery-grid {
+      display: grid;
+      width: min(100%, 1400px);
+      margin: 0 auto;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(8px, 1.5vw, 18px);
+    }
+
+    .gallery-grid img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(48, 113, 147, .17);
+    }
+
+    .gallery-grid .mirror-selfie {
+      object-position: center 28%;
+    }
+
+    .gallery-continue {
+      width: min(100%, 320px);
+      margin: 18px auto 4px;
+    }
+
+    .language-note-step {
+      position: relative;
+      padding: 46px 8px;
+    }
+
+    .language-note-step::before,
+    .language-note-step::after {
+      position: absolute;
+      left: 50%;
+      color: #438db4;
+      font-size: clamp(24px, 7vw, 36px);
+      letter-spacing: 12px;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .language-note-step::before {
+      content: "✿  ♥  ❀  ♥  ✿";
+      top: 0;
+    }
+
+    .language-note-step::after {
+      content: "♥  ❀  ♥  ✿  ♥";
+      bottom: 0;
+    }
+
+    .language-note-message,
+    .languages-title {
+      margin: 0;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 1.25;
+    }
+
+    .languages-step.step.active {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0;
+      padding: clamp(12px, 2vw, 26px);
+      overflow: auto;
+      background: linear-gradient(135deg, #e0f5ff 0%, #a9ddf3 50%, #d2effc 100%);
+      text-align: center;
+    }
+
+    .languages-title {
+      margin: 0 auto 12px;
+      font-size: clamp(24px, 5vw, 38px);
+    }
+
+    .languages-intro {
+      margin: 0 auto 16px;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(19px, 3.5vw, 27px);
+    }
+
+    .languages-grid {
+      display: grid;
+      width: min(100%, 1600px);
+      margin: 0 auto;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: clamp(5px, 1vw, 14px);
+      text-align: left;
+    }
+
+    .languages-grid ol {
+      margin: 0;
+      padding-left: clamp(16px, 2vw, 28px);
+      color: #315d74;
+      font-size: clamp(9px, 1vw, 14px);
+      line-height: 1.55;
+    }
+
+    .languages-grid li {
+      padding-left: 2px;
+      overflow-wrap: anywhere;
+    }
+
+    .heartfelt-step.step.active {
+      position: fixed;
+      inset: 0;
+      z-index: 7;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      margin: 0;
+      padding: clamp(24px, 5vh, 52px) clamp(30px, 7vw, 88px);
+      overflow-y: auto;
+      isolation: isolate;
+      background:
+        radial-gradient(ellipse at 12% 12%, rgba(255,255,255,.75), transparent 34%),
+        radial-gradient(ellipse at 88% 84%, rgba(255,255,255,.52), transparent 36%),
+        linear-gradient(135deg, #f8b8d5 0%, #c3b4f2 48%, #9fdbf2 100%);
+      text-align: center;
+    }
+
+    .heartfelt-step::before {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.95) 1px, transparent 2px),
+        radial-gradient(circle, rgba(255,255,255,.78) 1.5px, transparent 2.5px),
+        radial-gradient(circle, rgba(255,255,255,.65) 1px, transparent 2px);
+      background-size: 41px 43px, 73px 67px, 97px 89px;
+      background-position: 0 0, 24px 18px, 42px 52px;
+      content: "";
+      pointer-events: none;
+      animation: sparkle-drift 12s linear infinite;
+    }
+
+    @keyframes sparkle-drift {
+      to { background-position: 41px 43px, 97px 85px, 139px 141px; }
+    }
+
+    .heartfelt-frame {
+      position: relative;
+      width: min(100%, 860px);
+      margin: 0 auto;
+      padding: clamp(28px, 5vw, 54px) clamp(20px, 5vw, 54px);
+      border: 1px solid rgba(255,255,255,.78);
+      border-radius: 30px;
+      background: rgba(255,255,255,.31);
+      box-shadow: 0 22px 65px rgba(90, 71, 145, .2), inset 0 0 35px rgba(255,255,255,.2);
+      backdrop-filter: blur(7px);
+      text-align: left;
+    }
+
+    .heartfelt-flowers {
+      color: #a63d82;
+      font-size: clamp(19px, 3vw, 27px);
+      letter-spacing: clamp(4px, 1.5vw, 14px);
+      text-align: center;
+      user-select: none;
+    }
+
+    .heartfelt-copy {
+      margin: clamp(18px, 4vh, 34px) 0;
+      color: #49365f;
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.85;
+      text-wrap: pretty;
+    }
+
+    .heartfelt-copy p {
+      margin: 0 0 1.1em;
+    }
+
+    .heartfelt-copy p:last-child {
+      margin-bottom: 0;
+      color: #684279;
+      font-weight: 700;
+    }
+
+    .after-login button {
+      background: linear-gradient(135deg, #78c5e8, #438db4);
+      box-shadow: 0 10px 22px rgba(57, 127, 166, .2);
+    }
+
+    .after-login button:hover {
+      box-shadow: 0 13px 26px rgba(57, 127, 166, .28);
+    }
+
+    .question-image {
+      display: block;
+      width: min(100%, 220px);
+      max-height: 250px;
+      margin: 4px auto 16px;
+      object-fit: contain;
+    }
+
+    .question {
+      margin: 0;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(21px, 6vw, 28px);
+      line-height: 1.35;
+    }
+
+    .answer-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .answer-buttons button {
+      flex: 1;
+      width: auto;
+    }
+
+    .answer-buttons {
+      position: relative;
+    }
+
+    .answer-buttons.yes-takes-over #yesButton {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      transform: none !important;
+    }
+
+    .yes-result-image {
+      display: block;
+      width: min(100%, 300px);
+      max-height: 340px;
+      margin: 10px auto 16px;
+      object-fit: contain;
+    }
+
+    .yes-result-message {
+      margin: 0;
+      color: var(--deep-pink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(22px, 6vw, 30px);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .devil-emoji {
+      margin: 8px 0;
+      font-size: 64px;
+      line-height: 1.2;
+    }
+
+    @media (max-width: 1000px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 34px 24px 28px;
+      }
+
+      .flower-border {
+        opacity: .4;
+      }
+
+      .question-image {
+        max-height: 210px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-grid img {
+        border-radius: 13px;
+      }
+
+      .heartfelt-step.step.active {
+        padding: 18px 12px;
+      }
+
+      .heartfelt-frame {
+        padding: 25px 19px;
+        border-radius: 22px;
+      }
+
+      .heartfelt-copy {
+        font-size: 16px;
+        line-height: 1.75;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="flower-border left" aria-hidden="true">🌸 ｡ 𖥔  🌷 ｡ 𖥔  🌼 ｡ 𖥔  🌸</div>
+  <div class="flower-border right" aria-hidden="true">🌸 ｡ 𖥔  🌷 ｡ 𖥔  🌼 ｡ 𖥔  🌸</div>
+
+  <main class="card">
+    <div class="heart" aria-hidden="true">💗</div>
+    <h1>For Zunera</h1>
+    <p class="subtitle">A tiny gate before the surprise 
+        <br>
+        (heheheheheh)</p>
+
+    <section class="step active" id="identityStep">
+      <form id="identityForm">
+        <label for="firstName">First name</label>
+        <input id="firstName" name="firstName" autocomplete="given-name" placeholder="Your first name" required>
+
+        <label for="lastName">Last name</label>
+        <input id="lastName" name="lastName" autocomplete="family-name" placeholder="Your last name" required>
+
+        <button type="submit">Continue 🌸</button>
+        <p class="message" id="identityMessage" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="step" id="passwordStep">
+      <form id="passwordForm">
+        <label for="password">Secret password</label>
+        <input id="password" name="password" type="password" placeholder="Enter the secret password" required>
+
+        <button type="submit">Unlock 💝</button>
+        <p class="message" id="passwordMessage" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="step celebration-step" id="celebrationStep">
+      <h2 class="celebration-message">oh YAYAYYAYYA YOU MADE IT BABBYYYYY</h2>
+      <button type="button" id="celebrationContinue">Continue</button>
+    </section>
+
+    <section class="step" id="questionStep">
+      <img class="question-image" src="kuromi-transparent.png" alt="Kuromi illustration">
+      <h2 class="question">ok so firstly, do u even love me? 🤭</h2>
+      <div class="devil-emoji" id="devilEmoji" hidden aria-label="Smiling devil">😈</div>
+      <div class="answer-buttons">
+        <button type="button" id="yesButton">Yes</button>
+        <button type="button" id="noButton">No</button>
+      </div>
+      <p class="message" id="answerMessage" aria-live="polite"></p>
+      <section id="yesResult" hidden aria-live="polite">
+        <img class="yes-result-image" src="yes-response.jfif" alt="A special picture for you">
+        <p class="yes-result-message">oh YAYAYAYYAA THATS GOOOODDDD :D</p>
+        <button type="button" id="yesContinue">Continue</button>
+      </section>
+    </section>
+
+    <section class="step celebration-step" id="favoriteIntroStep">
+      <h2 class="photo-intro-message">ok let me show you my fav pictures of yours</h2>
+      <button type="button" id="favoriteIntroContinue">Continue</button>
+    </section>
+
+    <section class="step celebration-step" id="favoritePhotoStep">
+      <img class="favorite-photo" src="bday-photos/favorite.jpg" alt="One of my favorite pictures of you">
+      <button type="button" id="favoritePhotoContinue">Continue</button>
+    </section>
+
+    <section class="step photo-gallery" id="photoGalleryStep">
+      <h2 class="gallery-title">lol, you thought only 1 pic of u would be my fav?</h2>
+      <div class="gallery-grid">
+        <img src="bday-photos/favorite.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img src="bday-photos/photo-01.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img src="bday-photos/photo-02.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img src="bday-photos/photo-03.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img src="bday-photos/photo-04.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img src="bday-photos/photo-05.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img class="mirror-selfie" src="bday-photos/photo-06.jpg" alt="Mirror selfie" loading="lazy">
+        <img class="mirror-selfie" src="bday-photos/photo-08.jpg" alt="Mirror selfie" loading="lazy">
+        <img src="bday-photos/photo-07.jpg" alt="One of my favorite pictures of you" loading="lazy">
+        <img class="mirror-selfie" src="bday-photos/photo-09.jpg" alt="Mirror selfie" loading="lazy">
+      </div>
+      <p class="gallery-note">(these r all the pics i have of u 😔)</p>
+      <button type="button" class="gallery-continue" id="galleryContinue">Continue</button>
+    </section>
+
+    <section class="step language-note-step" id="languageNoteStep">
+      <h2 class="language-note-message">btw, i love you zune,</h2>
+      <button type="button" id="languageNoteContinue">Continue</button>
+    </section>
+
+    <section class="step languages-step" id="languagesStep">
+      <h2 class="languages-title">ily zune in 100 languages &lt;3!!</h2>
+      <p class="languages-intro">wait not like this</p>
+      <div class="languages-grid">
+        <ol start="1">
+          <li>I love you, Zune.</li>
+          <li>Te amo, Zune.</li>
+          <li>Je t'aime, Zune.</li>
+          <li>Ich liebe dich, Zune.</li>
+          <li>Ti amo, Zune.</li>
+          <li>Eu te amo, Zune.</li>
+          <li>Ik hou van jou, Zune.</li>
+          <li>Я тебя люблю, Zune.</li>
+          <li>我爱你, Zune.</li>
+          <li>我愛你, Zune.</li>
+          <li>愛してる, Zune.</li>
+          <li>사랑해, Zune.</li>
+          <li>Ana uhibbuka, Zune.</li>
+          <li>Main tum se pyaar karta hoon, Zune.</li>
+          <li>मैं तुमसे प्यार करता हूँ, Zune.</li>
+          <li>ਮੈਂ ਤੈਨੂੰ ਪਿਆਰ ਕਰਦਾ ਹਾਂ, Zune.</li>
+          <li>আমি তোমাকে ভালোবাসি, Zune.</li>
+          <li>நான் உன்னை காதலிக்கிறேன், Zune.</li>
+          <li>నేను నిన్ను ప్రేమిస్తున్నాను, Zune.</li>
+          <li>मी तुझ्यावर प्रेम करतो, Zune.</li>
+        </ol>
+        <ol start="21">
+          <li>હું તને પ્રેમ કરું છું, Zune.</li>
+          <li>Seni seviyorum, Zune.</li>
+          <li>Dooset daram, Zune.</li>
+          <li>Za ta sara meena laram, Zune.</li>
+          <li>Maan tosaan pyaar karyan tho, Zune.</li>
+          <li>Ani ohev otach, Zune.</li>
+          <li>Σ'αγαπώ, Zune.</li>
+          <li>Kocham cię, Zune.</li>
+          <li>Я тебе кохаю, Zune.</li>
+          <li>Miluji tě, Zune.</li>
+          <li>Jag älskar dig, Zune.</li>
+          <li>Jeg elsker deg, Zune.</li>
+          <li>Jeg elsker dig, Zune.</li>
+          <li>Minä rakastan sinua, Zune.</li>
+          <li>Ég elska þig, Zune.</li>
+          <li>Is breá liom tú, Zune.</li>
+          <li>Rwy'n dy garu di, Zune.</li>
+          <li>Szeretlek, Zune.</li>
+          <li>Te iubesc, Zune.</li>
+          <li>Обичам те, Zune.</li>
+        </ol>
+        <ol start="41">
+          <li>Volim te, Zune.</li>
+          <li>Волим те, Zune.</li>
+          <li>Anh yêu em, Zune.</li>
+          <li>ฉันรักคุณ, Zune.</li>
+          <li>Aku cinta kamu, Zune.</li>
+          <li>Saya cinta awak, Zune.</li>
+          <li>Mahal kita, Zune.</li>
+          <li>Nakupenda, Zune.</li>
+          <li>Ngiyakuthanda, Zune.</li>
+          <li>Aloha wau iā ʻoe, Zune.</li>
+          <li>Mo 'alofa atu ia te 'oe, Zune.</li>
+          <li>Aroha nui, Zune.</li>
+          <li>Ka 'ōha 'ōha au iā 'oe, Zune.</li>
+          <li>Mīlū-ā, Zune.</li>
+          <li>Kōhā au iā 'oe, Zune.</li>
+          <li>Ngiyakutsandza, Zune.</li>
+          <li>Ndiyakuthanda, Zune.</li>
+          <li>Ke a go rata, Zune.</li>
+          <li>Ke a rata, Zune.</li>
+          <li>Nda ni funa, Zune.</li>
+        </ol>
+        <ol start="61">
+          <li>Ndi a u funa, Zune.</li>
+          <li>Ńkūpēndā, Zune.</li>
+          <li>Mẹ́ nífẹ̀ẹ́ rẹ, Zune.</li>
+          <li>A hụrụ m gị n'anya, Zune.</li>
+          <li>Ina son ki, Zune.</li>
+          <li>Ndiyakuthanda, Zune.</li>
+          <li>Milujem ťa, Zune.</li>
+          <li>Ljubim te, Zune.</li>
+          <li>Aš tave myliu, Zune.</li>
+          <li>Es tevi mīlu, Zune.</li>
+          <li>Ma armastan sind, Zune.</li>
+          <li>Mən səni sevirəm, Zune.</li>
+          <li>Men seni sevaman, Zune.</li>
+          <li>Men seni süýýärin, Zune.</li>
+          <li>Men seni jaqsı kóremen, Zune.</li>
+          <li>Men seni жакшы көрөм, Zune.</li>
+          <li>Yn'k'ak'a, Zune.</li>
+          <li>Mi amo te, Zune.</li>
+          <li>Mi amas vin, Zune.</li>
+          <li>T'amo, Zune.</li>
+        </ol>
+        <ol start="81">
+          <li>Ti vogghiu beni, Zune.</li>
+          <li>Ti oju, Zune.</li>
+          <li>Ti vogliu bè, Zune.</li>
+          <li>Ma t'amu, Zune.</li>
+          <li>Ti amo assai, Zune.</li>
+          <li>Me t'am, Zune.</li>
+          <li>Ti stimo, Zune.</li>
+          <li>Jo të dua, Zune.</li>
+          <li>Te dua shumë, Zune.</li>
+          <li>Të dua, Zune.</li>
+          <li>Mi te dua, Zune.</li>
+          <li>Ndiyakuthanda kakhulu, Zune.</li>
+          <li>S'ti dua, Zune.</li>
+          <li>Inħobbok, Zune.</li>
+          <li>Ek is lief vir jou, Zune.</li>
+          <li>Ndiyakuthanda, Zune.</li>
+          <li>Kuya kutsandza, Zune.</li>
+          <li>E re ke a go rata, Zune.</li>
+          <li>Ngiyakuthanda, Zune.</li>
+          <li>Mea aloha au ia 'oe, Zune.</li>
+        </ol>
+      </div>
+      <button type="button" class="gallery-continue" id="languagesContinue">Continue</button>
+    </section>
+
+    <section class="step heartfelt-step" id="heartfeltStep">
+      <div class="heartfelt-frame">
+        <div class="heartfelt-flowers" aria-hidden="true">🌸　✿　🌷　♥　🌷　✿　🌸</div>
+        <div class="heartfelt-copy">
+          <p>ok now lets come to actual shit now lowkey, you are the most important person in my life right now and without you im incomplete, i cannot go a asingle moment without missing you, you complete me, you are the lightness in my dark, and most importantly, you are MY ZUNEEEE :D.</p>
+          <p>i just hope that one day well get married and silence all those people who doubtred us!!! honestly whenever i talk about these type of thinga im always in loss of words, you make me so speechless, in a good way, i might not be the best, but ill understand you the best, listen to every single thing you say, always be by your side, never leaving you alone to let you deal with all of that shit by yourself :), ill alwasy be by your side, you can completely trust me, your secrets will get buried with me</p>
+          <p>and one more thing, if a billion ppl loves u, im one of them, if a million ppl love u, im one of them too, if only 10 people loves u, im one of them too, if only 1 person loves you, thats me, and if no one loves u , im dead, jab tak sansein chl rhi hn you'll never feel like no one loves you, you're special meri jaan, you matter,especially to me</p>
+          <p>bhot bol liya lowkey 😭😭 but if u liked it, or u smiled a bit, it was worth evey single second, you'll alwasy be my favorite meri jaan :D and remember im saying all of this fr fr not just for your bday, i mean every single word in this, so yeah :) ilysm bae like more than you can imagine and more than you can ever imagine :)</p>
+          <p>and yeah, with the bottom depths of my heart liver kideny jo bhi h HAPPY BIRTHDAYYY !!!! may our relatiosnhip never end and always go smoothly without any issues :) i hope your enjoy this day, and i hope u have a good day, also ke if u werent having a good day, this act made your day better :) ilysm babyyyy muah !! &lt;3</p>
+        </div>
+        <div class="heartfelt-flowers" aria-hidden="true">🌷　♥　🌸　✿　🌸　♥　🌷</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const identityForm = document.getElementById("identityForm");
+    const identityMessage = document.getElementById("identityMessage");
+    const passwordForm = document.getElementById("passwordForm");
+    const passwordMessage = document.getElementById("passwordMessage");
+    const answerMessage = document.getElementById("answerMessage");
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const answerButtons = document.querySelector(".answer-buttons");
+    const questionImage = document.querySelector(".question-image");
+    const question = document.querySelector(".question");
+    const devilEmoji = document.getElementById("devilEmoji");
+    const yesResult = document.getElementById("yesResult");
+    let noPressCount = 0;
+
+    identityForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const firstName = document.getElementById("firstName").value.trim().toLowerCase();
+      const lastName = document.getElementById("lastName").value.trim().toLowerCase();
+      const validLastName = lastName === "azeem" || lastName === "mahad";
+
+      if (firstName !== "zunera" || !validLastName) {
+        identityMessage.textContent = "Hmm... that doesn't look right, cutu 🌷";
+        return;
+      }
+
+      if (lastName === "mahad") {
+        identityMessage.textContent = "ok wow thats cute 😭 ilysm muah";
+      } else {
+        identityMessage.textContent = "Perfect 🌸";
+      }
+
+      window.setTimeout(() => {
+        document.getElementById("identityStep").classList.remove("active");
+        document.getElementById("passwordStep").classList.add("active");
+        document.getElementById("password").focus();
+      }, lastName === "mahad" ? 1800 : 700);
+    });
+
+    passwordForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const password = document.getElementById("password").value.trim();
+      const correctPassword = "zune is the bestest gf that has ever stepped foot on the face of earth";
+
+      if (password !== correctPassword) {
+        passwordMessage.textContent = "ofho cutu, go ask your bf whats the password";
+        return;
+      }
+
+      document.getElementById("passwordStep").classList.remove("active");
+      document.getElementById("celebrationStep").classList.add("active");
+      document.body.classList.add("after-login");
+    });
+
+    document.getElementById("celebrationContinue").addEventListener("click", () => {
+      document.getElementById("celebrationStep").classList.remove("active");
+      document.getElementById("questionStep").classList.add("active");
+    });
+
+    document.getElementById("yesContinue").addEventListener("click", () => {
+      document.getElementById("questionStep").classList.remove("active");
+      document.getElementById("favoriteIntroStep").classList.add("active");
+    });
+
+    document.getElementById("favoriteIntroContinue").addEventListener("click", () => {
+      document.getElementById("favoriteIntroStep").classList.remove("active");
+      document.getElementById("favoritePhotoStep").classList.add("active");
+    });
+
+    document.getElementById("favoritePhotoContinue").addEventListener("click", () => {
+      document.getElementById("favoritePhotoStep").classList.remove("active");
+      document.getElementById("photoGalleryStep").classList.add("active");
+    });
+
+    document.getElementById("galleryContinue").addEventListener("click", () => {
+      document.getElementById("photoGalleryStep").classList.remove("active");
+      document.getElementById("languageNoteStep").classList.add("active");
+    });
+
+    document.getElementById("languageNoteContinue").addEventListener("click", () => {
+      document.getElementById("languageNoteStep").classList.remove("active");
+      document.getElementById("languagesStep").classList.add("active");
+    });
+
+    document.getElementById("languagesContinue").addEventListener("click", () => {
+      document.getElementById("languagesStep").classList.remove("active");
+      document.getElementById("heartfeltStep").classList.add("active");
+    });
+
+    yesButton.addEventListener("click", () => {
+      questionImage.hidden = true;
+      question.hidden = true;
+      answerButtons.hidden = true;
+      answerMessage.hidden = true;
+      devilEmoji.hidden = true;
+      yesResult.hidden = false;
+    });
+
+    noButton.addEventListener("click", () => {
+      if (noButton.disabled) {
+        return;
+      }
+
+      noPressCount += 1;
+      answerMessage.textContent = "very bad and mean :(";
+
+      if (noPressCount >= 7) {
+        questionImage.hidden = true;
+        devilEmoji.hidden = false;
+        noButton.disabled = true;
+        answerButtons.classList.add("yes-takes-over");
+        return;
+      }
+
+      yesButton.style.transform = `scale(${1 + noPressCount * 0.1})`;
+    });
+  </script>
+</body>
+</html> 
